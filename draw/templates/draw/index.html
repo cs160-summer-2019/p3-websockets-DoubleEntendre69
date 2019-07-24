@@ -11,12 +11,13 @@
     <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
 
     <style type="text/css">
+      <element onmousemove="myScript">
     </style>
 
 </head>
 <body>
-    <!-- You may change the dimensions of this canvas -->
-    <canvas id="myCanvas" width="750px" height="750px"></canvas>
+
+<canvas id="myCanvas" width="1000px" height="1000px"></canvas>
 </body>
 <script>
 
@@ -28,9 +29,87 @@
     // getting the URL (you may want to use for Exercise 3)
     var url = window.location.href;
 
-    // var socket = new WebSocket(
-    //     'wss://<your url here>/ws/draw');
+    var socket = new WebSocket('wss://p3-websockets-DoubleEntendre69-ziba.codeanyapp.com/ws/draw');
+  
 
 
+var path;
+tool.minDistance = 5;
+path = new paper.Path();
+var paths = {};
+  
+  
+var user = Math.random();
+var color = '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
+path.strokeColor = color;
+
+tool.onMouseDrag = function(event) {
+      //newPoint is obj
+    var newPoint = {
+     'id': user,
+     'x': event.point.x,
+     'y': event.point.y,
+     'color': color
+     };
+  
+    socket.send(JSON.stringify(newPoint));
+    path.add(event.point);
+
+}
+
+
+socket.onmessage = function(receivedMessage) {
+    if (url.indexOf("?size=small")> -1){
+      return;
+    }
+    //o is pointObj
+    var pointObj = JSON.parse(receivedMessage.data);
+    //var newPath = new paper.Path();
+  
+    var rID = (pointObj.id).toString();
+    var rx = pointObj.x;
+    var ry = pointObj.y;
+    
+    var newPoint = new paper.Point(pointObj.x, pointObj.y);
+    var newColor = pointObj.color;
+    //path.add(newPoint);
+    
+    if (!(rID in paths)) {
+      paths[rID] = new paper.Path();
+    }
+    
+  paths[rID].strokeColor = newColor;
+  paths[rID].add(newPoint);
+      
+}
+
+
+window.addEventListener('devicemotion', function(event) {
+  
+  var xAcceleration= Math.abs(event.acceleration.x);
+  var yAcceleration= Math.abs(event.acceleration.y);
+  
+  if ((xAcceleration>12) || (yAcceleration>12)){
+    paper.project.clear();
+  }
+  
+});
+  
+
+  windown.addEventListener('deviceorientation', function (event) {
+    
+    if (event.gamma > 70) {
+    //if ((currentOrient>45) && (gamma<30)){
+      path.strokeColor='#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
+    }
+    
+    
+  });
+
+  
 </script>
 </html>
+
+
+
+
