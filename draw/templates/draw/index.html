@@ -4,21 +4,182 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>P4 Drawing</title>
+    <title>Travel Planner</title>
 
     <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
     <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
 
+	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>  
+
+	<style type="text/css">
+    
+    .titleline1{
+      font-size: 90px;
+      font-family: "Courier";
+      margin-top:50px;
+      margin-left:40px;
+      text-shadow: 0 0 7px black;
+      color: white;
+    }
+    
+    .titleline2{
+      margin-top:-25px;
+      margin-left:220px;
+      font-size: 90px;
+      font-family: "Courier";
+      text-shadow: 0 0 7px black;
+      color: white;
+    }
+    
+    
+    .frame {
+      display:flex;
+      background-color: #ffffff;
+      border-radius: 15px;
+      padding-top: 5%;
+			width: 75%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top:7%;
+      margin-left:12.5%;
+      height:900px;
+		  }
+    
+    .directions {
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Trebuchet MS";
+      font-size: 30px;
+      margin-bottom:20px;
+      width:75vw;
+      margin-top:20px;
+      margin-left:12.5vw;
+      
+		}
+    
+		#color-palette {
+      display:inline-block;
+      border-radius: 15px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-left:15px;
+			width: 75%;
+			background-color: #CCFFFF;
+			display: flex;
+			flex-wrap: wrap;
+			top: 100px;
+      display: flex;
+      align-items: center;
+      margin-left: 12.5%;
+		}
+		.swatch {
+			width: 65px;
+			height: 65px;
+			-moz-border-radius: 32px;
+			-webkit-border-radius: 32px;
+			border-radius: 32px;
+			margin: 3px;
+		}
+		#myCanvas {
+      width:100%;
+      height:100%;
+		}
+
+    #undo {
+      border-radius: 10px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+			width: 45%;
+			background-color: #CCFFFF;
+			display: flex;
+      justify-content:center;
+			top: 100px;
+      font-size:25px;
+		}
+    
+    #reset {
+			display:inline-block;
+      border-radius: 10px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+			width: 45%;
+			background-color: #CCFFFF;
+			top: 100px;
+      display: flex;
+      justify-content:center;
+      font-size:25px;
+		}
+    
+    #buttonline{
+      margin-left:12.5%;
+      width:75%;
+      display: flex;
+      flex-direction:row;
+      align-items: center;
+      justify-content: space-between;
+      margin-top:60px;
+    }
+    
+	</style>
+
+	<script type="text/javascript" canvas="canvas">
+    
+    
+		window.onload = function() {
+      //put stff you want to happen here
+      
+		}
+    
+    
+	</script>
+  
+  
     <style type="text/css">
       <element onmousemove="myScript">
     </style>
 
 </head>
-<body>
+<body style="background-color:powderblue; height:100vh">
 
 <canvas id="myCanvas" width="1000px" height="1000px"></canvas>
+  
+  
+  
+   <div class="titleline1">Color Me</div>
+    <div class="titleline2">Guessing Game</div>
+
+    <div class="directions">   
+      <p>
+        Directions: Guess the image you are coloring to reveal the entire image!
+      </p>
+    </div> 
+    
+    <div id="color-palette"></div>
+
+  <div class="frame">
+	<canvas id="myCanvas"></canvas>
+  </div>
+  
+   <div id="buttonline">
+      <div id="undo" type='button'>Undo</div>
+      <div id="reset" type='button'>Clear</div>
+  
+  </div>
+  
+	
 </body>
+  
+  
+  
+  
+  
 <script>
 
     // setting up the canvas and one paper tool
