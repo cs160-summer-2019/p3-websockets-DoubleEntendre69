@@ -26,46 +26,67 @@
       display: flex;
     }
     
-/*     .frame {
-      display: flex;
+
+   .frame {
+     
+    display: flex;
+    flex-wrap: wrap;
+     
+    margin-top: 30px;
+	  display: flex;
+    flex-direction: row;
+     
       border-radius: 15px;
       padding-top: 5px;
       padding-bottom: 5px;
       padding-left:15px;
-			width: 75%;
-			flex-wrap: wrap;
 			top: 100px;
       align-items: center;
-      margin-left: 12.5%;
-      
+      margin-left: 10%;
       margin-top: 30px;
-      flex-direction: column;
-      position: absolute;
 
-		  } */
+		  }
     
      
     #timetable {
-      background-color: #CCFFFF;
-      height: 180px;
+      color: white;
+      background-color: #505050;
       margin-bottom: 30px;
+      font-size: 22px;
+     
+      padding-left:30px;
+      width: 400px;
+      height: 600px;
 
     }
     
     #map {
-      background-color: #CCFFFF;
-      height: 180px;
+      color: white;
+      background-color: #505050;
       margin-bottom: 30px;
+      
+      padding-left:30px;
+      width: 400px;
+      height: 600px;
   
     }
     
     #todo {
-      background-color: #CCFFFF;
-      height: 180px;
+      color: white;
+      background-color: #505050;
       margin-bottom: 30px;
+      
+      padding-left:30px;
+      width: 400px;
+      height: 600px;
     }
     
+    
+    
+    
+    
     .container {
+      width: 100%;
       display: block;
       position: relative;
       padding-left: 35px;
@@ -78,7 +99,7 @@
       user-select: none;
     }
 
-    /* Hide the browser's default checkbox */
+ 
     .container input {
       position: absolute;
       opacity: 0;
@@ -87,9 +108,9 @@
       width: 0;
     }
 
-    /* Create a custom checkbox */
+
    .checkmark {
-     position: absolute;
+      position: absolute;
       top: 0;
       left: 0;
       height: 25px;
@@ -97,29 +118,25 @@
       background-color: #eee;
     }
 
-    /* On mouse-over, add a grey background color */
+
   .container:hover input ~ .checkmark {
      background-color: #ccc;
     }
 
-    /* When the checkbox is checked, add a blue background */
   .container input:checked ~ .checkmark {
-      background-color: #2196F3;
+      background-color: black;
     }
 
-    /* Create the checkmark/indicator (hidden when not checked) */
   .checkmark:after {
       content: "";
       position: absolute;
       display: none;
     }
 
-    /* Show the checkmark when checked */
   .container input:checked ~ .checkmark:after {
       display: block;
     }
 
-    /* Style the checkmark/indicator */
   .container .checkmark:after {
       left: 9px;
       top: 5px;
@@ -152,8 +169,6 @@
 
 </head>
 <body style="background-color:powderblue; height:100vh">
-
-<!--   <canvas id="myCanvas" width="1000px" height="1000px"></canvas> -->
   
    <div class="title">Travel Planner</div>
   
@@ -165,62 +180,52 @@
          
         8 am:<br>
         <input type="text">
-        <br>
+        <br> <br>
         9 am:<br>
         <input type="text">
-        <br>
+        <br> <br>
         10 am:<br>
         <input type="text">
-        <br>
-<!--        11 am:<br>
+        <br> <br>
+       11 am:<br>
         <input type="text">
-        <br>
+        <br> <br>
          12 pm:<br>
         <input type="text">
-        <br> 
-        1 pm:<br>
-        <input type="text">
-        <br>
-        2 pm:<br>
-        <input type="text">
-        <br> 
-        3 pm:<br>
-        <input type="text">
-        <br> 
-        4 pm:<br>
-        <input type="text">
-        <br>
-        5pm:<br>
-        <input type="text">
-        <br> -->
+        <br>  <br>
+
          
         </form> 
      </div>
    </div>
     
    <div class="frame">
-     <div id="map">Map</div>
+     <div id="map">
+      <h1>
+        Map
+       </h1>
+     </div>
    </div>
    
    <div class="frame">
      <div id="todo">
       <h1>To-Do List</h1>
-       <label class="container">Visit the landmark
+       <label class="container">Visit the landmark <br> <br>
           <input type="checkbox" checked="checked">
           <span class="checkmark"></span>
         </label>
 
-      <label class="container">Go up the tower
+      <label class="container">Go up the tower <br> <br>
         <input type="checkbox">
         <span class="checkmark"></span>
       </label>
 
-      <label class="container">See the beach
+      <label class="container">See the beach <br> <br>
        <input type="checkbox">
        <span class="checkmark"></span>
       </label>
 
-      <label class="container">Dine at restaurant
+      <label class="container">Dine at restaurant <br> <br>
         <input type="checkbox">
         <span class="checkmark"></span>
       </label>
@@ -232,92 +237,7 @@
   
 <script>
 
-    // setting up the canvas and one paper tool
-    var canvas = document.getElementById('myCanvas');
-    paper.setup(canvas);
-    var tool = new paper.Tool();
 
-    // getting the URL (you may want to use for Exercise 3)
-    var url = window.location.href;
-
-    var socket = new WebSocket('wss://p3-websockets-DoubleEntendre69-ziba.codeanyapp.com/ws/draw');
-  
-
-
-var path;
-tool.minDistance = 5;
-path = new paper.Path();
-var paths = {};
-  
-  
-var user = Math.random();
-var color = '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
-path.strokeColor = color;
-
-tool.onMouseDrag = function(event) {
-      //newPoint is obj
-    var newPoint = {
-     'id': user,
-     'x': event.point.x,
-     'y': event.point.y,
-     'color': color
-     };
-  
-    socket.send(JSON.stringify(newPoint));
-    path.add(event.point);
-
-}
-
-
-socket.onmessage = function(receivedMessage) {
-    if (url.indexOf("?size=small")> -1){
-      return;
-    }
-    //o is pointObj
-    var pointObj = JSON.parse(receivedMessage.data);
-    //var newPath = new paper.Path();
-  
-    var rID = (pointObj.id).toString();
-    var rx = pointObj.x;
-    var ry = pointObj.y;
-    
-    var newPoint = new paper.Point(pointObj.x, pointObj.y);
-    var newColor = pointObj.color;
-    //path.add(newPoint);
-    
-    if (!(rID in paths)) {
-      paths[rID] = new paper.Path();
-    }
-    
-  paths[rID].strokeColor = newColor;
-  paths[rID].add(newPoint);
-      
-}
-
-
-window.addEventListener('devicemotion', function(event) {
-  
-  var xAcceleration= Math.abs(event.acceleration.x);
-  var yAcceleration= Math.abs(event.acceleration.y);
-  
-  if ((xAcceleration>12) || (yAcceleration>12)){
-    paper.project.clear();
-  }
-  
-});
-  
-
-  windown.addEventListener('deviceorientation', function (event) {
-    
-    if (event.gamma > 70) {
-    //if ((currentOrient>45) && (gamma<30)){
-      path.strokeColor='#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
-    }
-    
-    
-  });
-
-  
 </script>
 </html>
 
