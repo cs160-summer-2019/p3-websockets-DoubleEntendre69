@@ -149,18 +149,12 @@
       transform: rotate(45deg);
     }
     
-	</style>
+    
 
-	<script type="text/javascript" canvas="canvas">
     
-    
-		window.onload = function() {
-      //put stff you want to happen here
-      
-		}
-    
-    
-	</script>
+	</style>
+  
+  
   
   
     <style type="text/css">
@@ -171,6 +165,7 @@
 <body style="background-color:powderblue; height:100vh">
   
    <div class="title">Travel Planner</div>
+  
   
    <div class="frame">
      <div id="timetable">
@@ -204,6 +199,21 @@
       <h1>
         Map
        </h1>
+        <div class="container1">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <p class="lead">Map</p>
+                </div>
+            </div> 
+        </div> 
+
+        <div id="map"></div>
+
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu5nZKbeK-WHQ70oqOWo-_4VmwOwKP9YQ"></script>
+        <script src="custom.js"></script>
+    
      </div>
    </div>
    
@@ -236,6 +246,29 @@
   
   
 <script>
+    
+    
+$(function () {
+
+    function initMap() {
+
+        var location = new google.maps.LatLng(50.0875726, 14.4189987);
+
+        var mapCanvas = document.getElementById('map');
+        var mapOptions = {
+            center: location,
+            zoom: 16,
+            panControl: false,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        var map = new google.maps.Map(mapCanvas, mapOptions);
+
+    }
+
+    google.maps.event.addDomListener(window, 'load', initMap);
+});
+    
+    
 
 
 </script>
